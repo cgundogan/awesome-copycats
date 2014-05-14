@@ -90,7 +90,7 @@ local layouts = {
 
 -- {{{ Tags
 tags = {
-   names = { "web", "term", "im", "docs", "media", "files", "other" },
+   names = { "web", "term", "im", "email", "docs", "media", "other" },
    layout = { layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2] }
 }
 for s = 1, screen.count() do
@@ -652,11 +652,14 @@ awful.rules.rules = {
     { rule = { class = "URxvt" },
           properties = { opacity = 0.99 } },
 
-    { rule = { class = "MPlayer" },
+    { rule = { class = "MPlayer", tag = tags[1][6] },
           properties = { floating = true } },
     
     { rule = { class = "Skype" },
           properties = { floating = false, tag = tags[1][3] } },
+
+    { rule = { class = "Thunderbird" },
+          properties = { floating = false, tag = tags[1][4] } },
 
     { rule = { class = "Chromium" },
           properties = { floating = false, tag = tags[1][1] } },
