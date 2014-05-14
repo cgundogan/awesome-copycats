@@ -15,6 +15,7 @@ local beautiful = require("beautiful")
 local naughty   = require("naughty")
 local drop      = require("scratchdrop")
 local lain      = require("lain")
+local menubar = require("menubar")
 -- }}}
 
 -- {{{ Error handling
@@ -113,6 +114,9 @@ require("freedesktop/freedesktop")
 
 -- {{{ Wibox
 markup      = lain.util.markup
+
+-- Menubar
+menubar.utils.terminal = terminal
 
 -- Textclock
 clockicon = wibox.widget.imagebox(beautiful.widget_clock)
@@ -558,7 +562,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "g", function () awful.util.spawn(graphics) end),
 
     -- Prompt
-    awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey }, "r", function() menubar.show() end),
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run({ prompt = "Run Lua code: " },
