@@ -491,25 +491,28 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey,           }, "w",      function () yawn.show(7) end),
 
     -- ALSA volume control
-    awful.key({ altkey }, "Up",
+    awful.key({ }, "XF86AudioRaiseVolume",
         function ()
-            awful.util.spawn("amixer -q set Master 1%+")
+            awful.util.spawn("amixer -q set Master 2%+")
             volumewidget.update()
         end),
-    awful.key({ altkey }, "Down",
+    awful.key({ }, "XF86AudioLowerVolume",
         function ()
-            awful.util.spawn("amixer -q set Master 1%-")
+            awful.util.spawn("amixer -q set Master 2%-")
             volumewidget.update()
         end),
-    awful.key({ altkey }, "m",
+    awful.key({ }, "XF86AudioMute",
         function ()
             awful.util.spawn("amixer -q set Master playback toggle")
             volumewidget.update()
         end),
-    awful.key({ altkey, "Control" }, "m",
+    awful.key({ }, "XF86AudioMicMute",
         function ()
-            awful.util.spawn("amixer -q set Master playback 100%")
-            volumewidget.update()
+            awful.util.spawn("amixer -q set Capture 100% toggle")
+        end),
+    awful.key({ }, "XF86TouchpadToggle",
+        function ()
+            awful.util.spawn_with_shell("synclient TouchpadOff=$(synclient -l | grep -ce TouchpadOff.*0)")
         end),
 
     -- MPD control
