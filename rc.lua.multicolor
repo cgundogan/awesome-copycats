@@ -510,6 +510,7 @@ globalkeys = awful.util.table.join(
         function ()
             awful.util.spawn("amixer -q set Capture 100% toggle")
         end),
+
     -- OTHER
     awful.key({ }, "XF86TouchpadToggle",
         function ()
@@ -518,6 +519,10 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86ScreenSaver",
         function ()
             awful.util.spawn_with_shell("i3lock -d")
+        end),
+    awful.key({ }, "XF86Display",
+        function ()
+            awful.util.spawn_with_shell("arandr")
         end),
 
     -- MPD control
