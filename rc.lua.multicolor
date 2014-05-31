@@ -522,7 +522,7 @@ globalkeys = awful.util.table.join(
         end),
     awful.key({ }, "XF86ScreenSaver",
         function ()
-            awful.util.spawn_with_shell("i3lock -d")
+            awful.util.spawn_with_shell("slimlock")
         end),
     awful.key({ }, "XF86Display",
         function ()
