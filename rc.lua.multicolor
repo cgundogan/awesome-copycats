@@ -65,13 +65,13 @@ modkey     = "Mod4"
 altkey     = "Mod1"
 terminal   = "urxvtc" or "xterm"
 editor     = os.getenv("EDITOR") or "nano" or "vi"
-editor_cmd = terminal .. " -e " .. editor
+editor_cmd = terminal .. " -e zsh -i -c " .. editor
 
 -- user defined
 browser    = "chromium"
 gui_editor = "gvim"
 --graphics   = "gimp"
-mail       = terminal .. " -e mutt "
+mail       = terminal .. "  -e zsh -i -c mutt "
 guimail    = "thunderbird"
 
 local layouts = {
@@ -140,14 +140,12 @@ fswidget = lain.widgets.fs({
     end
 })
 
---[[ Mail IMAP check
--- commented because it needs to be set before use
 mailicon = wibox.widget.imagebox()
 mailicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(mail) end)))
 mailwidget = lain.widgets.imap({
-    timeout  = 180,
-    server   = "server",
-    mail     = "mail",
+    timeout  = 30,
+    server   = "imap.gmail.com",
+    mail     = "user",
     password = "keyring get mail",
     settings = function()
         if mailcount > 0 then
@@ -159,7 +157,6 @@ mailwidget = lain.widgets.imap({
         end
     end
 })
-]]
 
 -- CPU
 cpuicon = wibox.widget.imagebox()
@@ -338,8 +335,8 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the upper right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    --right_layout:add(mailicon)
-    --right_layout:add(mailwidget)
+    right_layout:add(mailicon)
+    right_layout:add(mailwidget)
     right_layout:add(netdownicon)
     right_layout:add(netdowninfo)
     right_layout:add(netupicon)
@@ -497,22 +494,22 @@ globalkeys = awful.util.table.join(
     -- ALSA volume control
     awful.key({ }, "XF86AudioRaiseVolume",
         function ()
-            awful.util.spawn("amixer -q set Master 2%+")
+            awful.util.spawn("pactl set-sink-volume 0 -- +2%")
             volumewidget.update()
         end),
     awful.key({ }, "XF86AudioLowerVolume",
         function ()
-            awful.util.spawn("amixer -q set Master 2%-")
+            awful.util.spawn("pactl set-sink-volume 0 -- -2%")
             volumewidget.update()
         end),
     awful.key({ }, "XF86AudioMute",
         function ()
-            awful.util.spawn("amixer -q set Master playback toggle")
+            awful.util.spawn("pactl set-sink-mute 0 toggle")
             volumewidget.update()
         end),
     awful.key({ }, "XF86AudioMicMute",
         function ()
-            awful.util.spawn("amixer -q set Capture 100% toggle")
+            awful.util.spawn("pactl set-source-mute 1 toggle")
         end),
 
     -- OTHER
